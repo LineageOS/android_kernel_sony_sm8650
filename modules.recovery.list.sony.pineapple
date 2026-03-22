@@ -1,1 +1,3 @@
 lxs_touchscreen.ko
+somc_battman_dbg.ko
+somc_battchg_ext.ko
