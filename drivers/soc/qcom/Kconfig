@@ -1346,4 +1346,12 @@ config QCOM_KERNEL_BASED_RESTORE
 	  Requires hibernation support in the kernel.
 	  If not sure, say N.
 
+config QCOM_STATS_ON_SYSFS
+	bool "Enable SoC sleep stats I/F on SYSFS"
+	depends on QCOM_STATS && QCOM_SMEM
+	help
+	  Duplicate stats I/F virtual files to /sys/kernel/qcom_sleep_stats/
+	  derived from /sys/kernel/debug/qcom_stats/ .
+
+
 endmenu
