@@ -1,3 +1,5 @@
 lxs_touchscreen.ko
+pinctrl-somc.ko
+pinctrl-somc-pmic.ko
 somc_battman_dbg.ko
 somc_battchg_ext.ko

@@ -1,8 +1,13 @@
+camera_sync.ko
 cirrus_cs35l45.ko
 cirrus_cs40l2x.ko
 cirrus_cs40l2x_codec.ko
 cirrus_wm_adsp.ko
 et603-int.ko
+hdmi_detect.ko
 lxs_touchscreen.ko
+pinctrl-somc-pmic.ko
+slg51000-regulator.ko
 somc_battman_dbg.ko
 somc_battchg_ext.ko
+sony_camera.ko
