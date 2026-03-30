@@ -266,6 +266,12 @@ config MACH_SONY_DEVICE
 	help
 	  This enables support for Sony Pineapple (Asahi) devices.
 
+config MACH_SONY_PDX245
+	bool "Enable support for Sony PDX245"
+	depends on MACH_SONY_DEVICE
+	help
+	  This enables support for Sony PDX245 devices.
+
 config ARCH_NIOBE
         bool "Enable support for Qualcomm Technologies, Inc. Niobe"
         depends on ARCH_QCOM
