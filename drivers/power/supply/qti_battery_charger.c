@@ -290,6 +290,8 @@ struct battery_chg_dev {
 	bool				notify_en;
 	bool				error_prop;
 	unsigned int			num_usb_ports;
+	/* To mitigate a race condition when we would we use QTI_CHARGER_RW_SHOW */
+	bool wireless_boost_enabled;
 };
 
 static const int battery_prop_map[BATT_PROP_MAX] = {
@@ -2164,6 +2166,13 @@ static ssize_t wireless_boost_en_store(struct class *c,
 	if (kstrtobool(buf, &val))
 		return -EINVAL;
 
+	/*
+	 * There may be a race and userspace may try to read the property before
+	 * it is written to the charger IC. As such, use the variable in the struct
+	 * to report wireless_boost_en state.
+	 */
+	bcdev->wireless_boost_enabled = val;
+
 	rc = write_property_id(bcdev, &bcdev->psy_list[PSY_TYPE_WLS],
 				WLS_BOOST_EN, val);
 	if (rc < 0)
@@ -2172,7 +2181,16 @@ static ssize_t wireless_boost_en_store(struct class *c,
 	return count;
 }
 
-QTI_CHARGER_RW_SHOW(wireless_boost_en, PSY_TYPE_WLS, WLS_BOOST_EN);
+static ssize_t wireless_boost_en_show(struct class *c,
+					struct class_attribute *attr,
+					char *buf)
+{
+	struct battery_chg_dev *bcdev = container_of(c, struct battery_chg_dev,
+						     battery_class);
+
+	return scnprintf(buf, PAGE_SIZE, "%d\n", bcdev->wireless_boost_enabled);
+}
+static CLASS_ATTR_RW(wireless_boost_en);
 
 static ssize_t _moisture_detection_en_store(struct class *c,
 					struct class_attribute *attr, enum psy_type type,
