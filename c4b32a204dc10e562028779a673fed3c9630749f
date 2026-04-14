@@ -16,6 +16,23 @@
       "message": "Fixes PowerShare enable state being incorrect.",
       "revId": "c4b32a204dc10e562028779a673fed3c9630749f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d33ad63_1963f56d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36773
+      },
+      "writtenOn": "2026-04-14T21:12:22Z",
+      "side": 1,
+      "message": "May cause issues with usb charging",
+      "revId": "c4b32a204dc10e562028779a673fed3c9630749f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
