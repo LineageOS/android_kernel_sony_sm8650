@@ -2152,6 +2152,8 @@ static ssize_t fake_soc_store(struct class *c, struct class_attribute *attr,
 }
 QTI_CHARGER_RW_PROP_SHOW(fake_soc, fake_soc);
 
+static bool wireless_boost_enabled = false;
+
 static ssize_t wireless_boost_en_store(struct class *c,
 					struct class_attribute *attr,
 					const char *buf, size_t count)
@@ -2164,6 +2166,8 @@ static ssize_t wireless_boost_en_store(struct class *c,
 	if (kstrtobool(buf, &val))
 		return -EINVAL;
 
+	wireless_boost_enabled = val;
+
 	rc = write_property_id(bcdev, &bcdev->psy_list[PSY_TYPE_WLS],
 				WLS_BOOST_EN, val);
 	if (rc < 0)
@@ -2172,7 +2176,17 @@ static ssize_t wireless_boost_en_store(struct class *c,
 	return count;
 }
 
-QTI_CHARGER_RW_SHOW(wireless_boost_en, PSY_TYPE_WLS, WLS_BOOST_EN);
+static ssize_t wireless_boost_en_show(struct class *c,
+					struct class_attribute *attr,
+					char *buf)
+{
+	/*
+	 * To prevent a race condition where userspace reads wireless_boost_en
+	 * while it is still being set, read it from a variable instead.
+	 */
+	return scnprintf(buf, PAGE_SIZE, "%d\n", wireless_boost_enabled);
+}
+static CLASS_ATTR_RW(wireless_boost_en);
 
 static ssize_t _moisture_detection_en_store(struct class *c,
 					struct class_attribute *attr, enum psy_type type,
